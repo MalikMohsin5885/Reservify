@@ -1,18 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import FlightSearch from '../../components/FlightSearch';
+import HotelDestionationSearch from '../../components/HotelDestionationSearch';
+import HotelSearch from '../../components/HotelSearch';
 
-export default function Tab() {
+export default function Trips() {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.container}>
-        <Text>Prips</Text>
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <FlightSearch />
+      {/* <HotelDestionationSearch/> */}
+      <HotelSearch/>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    padding: 16,
   },
 });

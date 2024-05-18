@@ -32,7 +32,7 @@ export default function Signup() {
         if (userData.Username.trim() === "" || userData.phone.trim() === "" || userData.email.trim() === "" || userData.password.trim() === "" || userData.cnfPassword.trim() === "") {
             Alert.alert("Invalid Form", "Please fill in all fields");
             return;
-        } else if (submit) {//checks if pass == cnfpass
+        } else if (submit) { // checks if pass == cnfpass
             console.log(userData);
             navigation.navigate('Login');
         } else {
@@ -67,8 +67,13 @@ export default function Signup() {
                                 placeholder={'Phone number'}
                                 name={'phone'}
                                 value={userData.phone}
+<<<<<<< Updated upstream
                                 onChangeText={(text) => handleChange("cnfPassword", text)}
                                 keyboardType="default"
+=======
+                                onChangeText={(text) => handleChange("phone", text)}
+                                keyboardType="phone-pad"
+>>>>>>> Stashed changes
                                 icon={"call"}
                             />
                             <CustomTextField
@@ -76,7 +81,11 @@ export default function Signup() {
                                 name={'email'}
                                 value={userData.email}
                                 onChangeText={(text) => handleChange("email", text)}
+<<<<<<< Updated upstream
                                 keyboardType="default"
+=======
+                                keyboardType="email-address"
+>>>>>>> Stashed changes
                                 icon={"mail-outline"}
                             />
                             <CustomTextField
@@ -85,6 +94,10 @@ export default function Signup() {
                                 value={userData.password}
                                 onChangeText={(text) => handleChange("password", text)}
                                 keyboardType="default"
+<<<<<<< Updated upstream
+=======
+                                secureTextEntry
+>>>>>>> Stashed changes
                                 icon={"lock-closed"}
                             />
                             <CustomTextField
@@ -93,6 +106,7 @@ export default function Signup() {
                                 value={userData.cnfPassword}
                                 onChangeText={(text) => handleChange("cnfPassword", text)}
                                 keyboardType="default"
+<<<<<<< Updated upstream
                                 icon={"lock-closed"}
                             />
                         </View>
@@ -111,6 +125,28 @@ export default function Signup() {
                             </TouchableOpacity>
                         </View>
                     </View>
+=======
+                                secureTextEntry
+                                icon={"lock-closed"}
+                            />
+                        </View>
+
+                        <View style={styles.bottomSection}>
+                            <CustomButton
+                                title={'Sign up'}
+                                color={'#102C57'}
+                                textColor={'#FEFAF6'}
+                                onPress={handleSubmit}
+                            />
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={{ fontSize: 17, fontWeight: '200', }}>Already have an account? </Text>
+                                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                                    <Text style={{ fontSize: 17, textDecorationLine: 'underline' }}>Login</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+>>>>>>> Stashed changes
                 </ScrollView>
             </SafeAreaView>
         </KeyboardAvoidingView>
