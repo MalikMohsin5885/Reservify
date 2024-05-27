@@ -20,7 +20,7 @@ export default function Profile() {
                     source={require('../../assets/profile.png')}//577 x 577
                     style={styles.profilePhoto}
                 />
-                <Text style={styles.userName}>Ali Hamza</Text>
+                <Text style={styles.userName}>Muhammad Almir</Text>
             </View>
 
             <View style={styles.card}>
