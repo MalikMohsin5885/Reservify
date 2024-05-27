@@ -1,14 +1,15 @@
-import { StyleSheet, Text, TouchableOpacity, View, TextInput, Modal, TouchableWithoutFeedback } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, TextInput, Modal, TouchableWithoutFeedback } from 'react-native';
 import DatePicker from 'react-native-modern-datepicker';
 
-const CustomDatePicker = () => {
+// Updated the function to use default parameter for defaultDate
+const CustomDatePicker = ({ defaultDate = '' }) => {
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(defaultDate);
   const [isDatePickerReady, setIsDatePickerReady] = useState(false);
 
   useEffect(() => {
-    // Pre-render DatePicker component by setting it ready when the component mounts
     setIsDatePickerReady(true);
   }, []);
 
@@ -27,14 +28,14 @@ const CustomDatePicker = () => {
 
   return (
     <View style={styles.container}>
-      <Text>DatePicker</Text>
       <TouchableOpacity onPress={handleTap}>
         <View style={styles.inputContainer}>
-          <TextInput 
-            style={styles.input} 
-            value={date} 
-            placeholder="Select a date" 
-            editable={false} // making the input non-editable, to be used only for display
+          <Ionicons name='calendar' size={24} color={'black'} />
+          <TextInput
+            style={styles.input}
+            value={date}
+            placeholder="Select a date"
+            editable={false}
           />
         </View>
       </TouchableOpacity>
@@ -72,25 +73,29 @@ const CustomDatePicker = () => {
       )}
     </View>
   );
-}
-
-export default CustomDatePicker;
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // backgroundColor: 'red'
   },
   inputContainer: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    borderRadius: 5,
+    flexDirection: 'row',
+    borderColor: '#ECECEC',
+    borderRadius: 17,
+    backgroundColor: '#ECECEC',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    gap: 10,
+    paddingHorizontal: '16%'
   },
   input: {
     height: 40,
     width: 200,
+    // color: 'black',
+    color: '#333',
+    // backgroundColor: 'yellow'
   },
   modalContainer: {
     flex: 1,
@@ -99,18 +104,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   datePicker: {
-    width: 350,  // Adjust the width as needed
-    height: 400, // Adjust the height as needed
+    width: 350,
+    height: 420,
     backgroundColor: 'white',
     padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
+    borderRadius: 17,
+    gap: 10,
   },
   closeButton: {
     marginBottom: 30,
+    marginHorizontal: 60,
     padding: 10,
-    color: '#fff',
-    backgroundColor: '#50D0FF',
+    color: '#FEFAF6',
+    backgroundColor: '#102C57',
     borderRadius: 12,
+    textAlign: 'center'
   }
 });
+
+export default CustomDatePicker;

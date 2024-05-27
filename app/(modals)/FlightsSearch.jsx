@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Stack } from 'expo-router'
-
-// Import cityToIataMapping
+import { Stack } from 'expo-router';
 import cityToIataMapping from '../../assets/data/cityToIataMapping';
 import CustomButton from '../../components/CustomButton';
 import CustomTextField from '../../components/CustomTextField';
+import CustomDatePicker from '../../components/CustomDatePicker';
 
 const FlightsSearch = () => {
   const navigation = useNavigation();
@@ -18,20 +17,16 @@ const FlightsSearch = () => {
     adults: ''
   });
 
-  // State for suggestions
   const [fromSuggestions, setFromSuggestions] = useState([]);
   const [toSuggestions, setToSuggestions] = useState([]);
 
   const handleChange = (name, value) => {
-    // Update form data
     setFormData({ ...formData, [name]: value });
 
-    // Get suggestions based on current input value
     const suggestions = value.trim() !== '' ? Object.keys(cityToIataMapping).filter(city =>
       city.toLowerCase().startsWith(value.toLowerCase())
     ) : [];
 
-    // Update suggestions based on input field
     if (name === 'fromId') {
       setFromSuggestions(suggestions);
     } else if (name === 'toId') {
@@ -40,10 +35,8 @@ const FlightsSearch = () => {
   };
 
   const handleSelectSuggestion = (name, suggestion) => {
-    // Update form data with selected suggestion
     setFormData({ ...formData, [name]: suggestion });
 
-    // Close suggestion list
     if (name === 'fromId') {
       setFromSuggestions([]);
     } else if (name === 'toId') {
@@ -58,11 +51,8 @@ const FlightsSearch = () => {
       return;
     }
 
-    // Map user input to corresponding IATA code
     const fromIata = cityToIataMapping[fromId] || '';
     const toIata = cityToIataMapping[toId] || '';
-
-    // Navigate to flight result screen with form data
 
     navigation.navigate('FlightResultScreen', { formData: { fromId: fromIata, toId: toIata, departureDate, adults } });
   };
@@ -74,6 +64,8 @@ const FlightsSearch = () => {
         headerShown: false
       }} />
       <View style={styles.card}>
+      <Text style={{fontSize: 30, marginBottom: 70,}}>Flights Search</Text>
+
         <CustomTextField
           style={styles.input}
           value={formData.fromId}
@@ -89,17 +81,12 @@ const FlightsSearch = () => {
           onChangeText={(text) => handleChange('toId', text)}
           placeholder="Enter destination (e.g., DEL.AIRPORT)"
         />
-        {/* Suggestions for "To" field */}
         {toSuggestions.length > 0 && toSuggestions.map((suggestion, index) => (
           <Text key={index} onPress={() => handleSelectSuggestion('toId', suggestion)}>{suggestion}</Text>
         ))}
 
-        <CustomTextField
-          style={styles.input}
-          value={formData.departureDate}
-          onChangeText={(text) => handleChange('departureDate', text)}
-          placeholder="Enter departure date (YYYY-MM-DD)"
-        />
+        
+        <CustomDatePicker defaultDate={formData.departureDate} />
 
         <CustomTextField
           style={styles.input}
@@ -118,9 +105,6 @@ const FlightsSearch = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 30
   },
   label: {
     fontSize: 16,
@@ -134,13 +118,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   card: {
+    flex: 1,
     backgroundColor: 'aliceblue',
-    width: '100%',
-    height: '50%',
     padding: 20,
     borderRadius: 30,
     alignItems: 'center',
-    justifyContent: 'space-evenly'
+    justifyContent: 'center'
   },
 });
 

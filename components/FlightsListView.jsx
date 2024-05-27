@@ -1,17 +1,3 @@
-// import { StyleSheet, Text, View } from 'react-native'
-// import React from 'react'
-
-// export default function FlightsListView() {
-//   return (
-//     <View>
-//       <Text>FlightsListView</Text>
-//     </View>
-//   )
-// }
-
-// const styles = StyleSheet.create({})
-
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Alert } from 'react-native';
 import { useRoute } from '@react-navigation/native';
@@ -24,7 +10,7 @@ const FlightResultScreen = () => {
   const formData={
     fromId:'LHE',
     toId:'LHR',
-    departureDate:'2024-05-23',
+    departureDate:'2024-05-30',
     adults:'1'
   }
 
