@@ -1,55 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import MenuButton from '../../components/ProfileMenuButton'; // Adjust the import path as necessary
 import { useNavigation } from '@react-navigation/native';
 
 export default function Profile() {
-    const navigation = useNavigation();
-  
-    const menuOptions = [
-        { title: 'Personnel Information', onPress: () => navigation.navigate('PersonnelInformation') },
-        { title: 'Notifications', onPress: () => console.log('Notifications') },
-        { title: 'Payments and Payouts', onPress: () => console.log('Payments and Payouts') },
-        { title: 'Privacy Policy', onPress: () => console.log('Privacy Policy') }
-    ];
+  const navigation = useNavigation();
+  const [name, setName] = useState('Mohsin Rasheed');
 
-    return (
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-            <View style={styles.profileHeader}>
-                <Image
-                    source={require('../../assets/profile.png')}//577 x 577
-                    style={styles.profilePhoto}
-                />
-                <Text style={styles.userName}>Muhammad Almir</Text>
-            </View>
+  const menuOptions = [
+    { title: 'Personnel Information', onPress: () => navigateToPersonnelInformation() },
+    { title: 'Notifications', onPress: () => console.log('Notifications') },
+    { title: 'Payments and Payouts', onPress: () => console.log('Payments and Payouts') },
+    { title: 'Privacy Policy', onPress: () => console.log('Privacy Policy') }
+  ];
 
-            <View style={styles.card}>
-                <View style={styles.cardContent}>
-                    <Text style={styles.cardHeading}>Booking.com your place</Text>
-                    <Text style={styles.cardDescription}>It's simple to get set up and start earning</Text>
-                </View>
-                <TouchableOpacity style={styles.iconCreditLink}>
-                    <Image
-                        style={styles.cardImage}
-                        source={require('../../assets/solar-energy.png')}
-                    />
-                </TouchableOpacity>
-            </View>
+  const navigateToPersonnelInformation = () => {
+    navigation.navigate('PersonnelInformation', { currentName: name }); // Pass only serializable data
+    navigation.navigate('PersonnelInformation', {updateName: setName, currentName: name }); // Pass only serializable data
+  };
 
-            <View style={styles.releaseCard}>
-                <Text style={styles.releaseText}>2024 Summer Release Features</Text>
-                <View style={styles.newContainer}>
-                    <Text style={styles.newText}>New</Text>
-                </View>
-            </View>
+  return (
+    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      <View style={styles.profileHeader}>
+        <Image
+          source={require('../../assets/profile.png')}
+          style={styles.profilePhoto}
+        />
+        <Text style={styles.userName}>{name}</Text>
+      </View>
 
-            <View style={styles.menuOptions}>
-                {menuOptions.map((option, index) => (
-                    <MenuButton key={index} title={option.title} onPress={option.onPress} />
-                ))}
-            </View>
-        </ScrollView>
-    );
+      <View style={styles.card}>
+        <View style={styles.cardContent}>
+          <Text style={styles.cardHeading}>Booking your place</Text>
+          <Text style={styles.cardDescription}>Effortless booking at your fingertips</Text>
+        </View>
+        <TouchableOpacity style={styles.iconCreditLink}>
+          <Image
+            style={styles.cardImage}
+            source={require('../../assets/solar-energy.png')}
+          />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.releaseCard}>
+        <Text style={styles.releaseText}>2024 Summer Release Features</Text>
+        <View style={styles.newContainer}>
+          <Text style={styles.newText}>New</Text>
+        </View>
+      </View>
+
+      <View style={styles.menuOptions}>
+        {menuOptions.map((option, index) => (
+          <TouchableOpacity key={index} style={styles.button} onPress={option.onPress}>
+            <Text style={styles.text}>{option.title}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -107,10 +114,11 @@ const styles = StyleSheet.create({
   cardImage: {
     width: 100,
     height: 100,
-    borderRadius: 5,
+    borderRadius: 60,
   },
   iconCreditLink: {
     backgroundColor: '#e1e4e8',
+    borderRadius: 10,
   },
   releaseCard: {
     flexDirection: 'row',
@@ -118,7 +126,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
     marginHorizontal: 20,
-    marginTop: 20,
+    marginTop: 15,
     padding: 15,
     borderRadius: 10,
     shadowColor: '#000',
@@ -142,10 +150,24 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: '#102C57',
+    padding: 3,
   },
   menuOptions: {
-    marginTop: 30,
+    marginTop: 5,
     paddingHorizontal: 20,
     marginBottom: 50,
-  }
+  },
+  button: {
+    backgroundColor: '#FFFFFF',
+    padding: 15,
+    borderRadius: 5,
+    marginTop: 10,
+    elevation: 3,
+  },
+  text: {
+    color: '#102C57',
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
 });

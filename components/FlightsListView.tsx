@@ -41,7 +41,7 @@ class FlightResultScreen extends Component<Props, State> {
     const formData = {
       fromId: 'LHE',
       toId: 'LHR',
-      departureDate: '2024-05-30',
+      departureDate: '2024-07-30',
       adults: '1',
     };
 

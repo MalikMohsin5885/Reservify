@@ -1,40 +1,74 @@
-import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import { Stack } from 'expo-router';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const PersonnelInformation = () => {
-  // Static data for personnel information
-  const data = [
-    { key: 'Name', value: 'Ali Hamza' },
-    { key: 'Birthday', value: 'December 7, 2002' },
+  const route = useRoute();
+  const navigation = useNavigation();
+  const { updateName, currentName } = route.params;
+
+  const [data, setData] = useState([
+    { key: 'Name', value: currentName },
+    { key: 'Birthday', value: 'September 8, 2003' },
     { key: 'Address', value: 'xyz street abc city' },
     { key: 'Phone Number', value: '03086227654' },
-    { key: 'Email', value: 'alihamza16jutt@gmail.com' },
-  ];
+    { key: 'Email', value: 'mohsinrasheed8239@gmail.com' },
+  ]);
+
+  const [editingField, setEditingField] = useState(null);
+  const [newValue, setNewValue] = useState('');
+
+  const handleEdit = (key, value) => {
+    setEditingField(key);
+    setNewValue(value);
+  };
+
+  const handleSave = (key) => {
+    const updatedData = data.map(item => item.key === key ? { ...item, value: newValue } : item);
+    setData(updatedData);
+    setEditingField(null);
+    setNewValue('');
+
+    if (key === 'Name') {
+      updateName(newValue);
+    }
+  };
 
   const renderItem = ({ item }) => {
+    const isEditing = editingField === item.key;
     return (
       <View style={styles.item}>
         <View style={styles.itemContent}>
-          {item.key ? <Text style={styles.itemHeading}>{item.key}</Text> : null}
-          {item.value ? <Text style={styles.itemInfo}>{item.value}</Text> : null}
+          <Text style={styles.itemHeading}>{item.key}</Text>
+          {isEditing ? (
+            <TextInput
+              style={styles.input}
+              value={newValue}
+              onChangeText={setNewValue}
+              onSubmitEditing={() => handleSave(item.key)}
+            />
+          ) : (
+            <Text style={styles.itemInfo}>{item.value}</Text>
+          )}
         </View>
-        <TouchableOpacity style={styles.editButton}>
-          <Text style={styles.editButtonText}>Edit</Text>
+        <TouchableOpacity style={styles.editButton} onPress={() => isEditing ? handleSave(item.key) : handleEdit(item.key, item.value)}>
+          <Text style={styles.editButtonText}>{isEditing ? 'Save' : 'Edit'}</Text>
         </TouchableOpacity>
       </View>
     );
   };
-  
 
   return (
     <SafeAreaView style={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} />
       <Text style={styles.header}>Personal Information</Text>
       <FlatList
         data={data}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
       />
-      <View style={styles.separator} /> {/* Horizontal line */}
+      <View style={styles.separator} />
     </SafeAreaView>
   );
 };
@@ -43,7 +77,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 10,
+    paddingVertical: 70,
+    paddingHorizontal: 20,
   },
   header: {
     fontSize: 24,
@@ -69,9 +104,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     letterSpacing: 0.5,
   },
+  input: {
+    color: '#000',
+    fontSize: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    paddingVertical: 5,
+    letterSpacing: 0.5,
+  },
   editButton: {
-    backgroundColor: 'transparent',
-    color: 'black',
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
@@ -87,4 +128,3 @@ const styles = StyleSheet.create({
 });
 
 export default PersonnelInformation;
-

@@ -49,14 +49,14 @@ const useHotelHook = () => {
             method: 'GET',
             url: 'https://booking-com.p.rapidapi.com/v1/hotels/search',
             params: {
-                checkout_date: '2024-06-28',
+                checkout_date: '2024-07-28',
                 order_by: 'popularity',
                 filter_by_currency: 'AED',
                 room_number: '1',
                 dest_id: '-2602512',
                 dest_type: 'city',
                 adults_number: '1',
-                checkin_date: '2024-06-4',
+                checkin_date: '2024-07-4',
                 locale: 'en-gb',
                 units: 'metric',
                 include_adjacency: 'true',
@@ -88,7 +88,6 @@ const useHotelHook = () => {
     }
 
     const fetchImages = async () => {
-
         const db = getDatabase(app);
         const dbRef = ref(db, 'images');
         console.log("data receiving")
